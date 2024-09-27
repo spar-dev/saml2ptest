@@ -8,7 +8,7 @@
  
   <ItemGroup>
     <PackageReference Include="Rsk.Saml" Version="9.1.1" />
-      <PackageReference Include="Rsk.Saml.IdentityProvider" Version="9.1.1" />
+    
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.1" />
   </ItemGroup>
   

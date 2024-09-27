@@ -9,7 +9,7 @@ using Rsk.Saml;
 using Rsk.Saml.Generators;
 
 
-namespace WebClient
+namespace IdentityServer
 {
    
         public class CustomNameIdGenerator : SamlNameIdGenerator
@@ -21,7 +21,7 @@ namespace WebClient
            
         }
 
-        public override async Task<Saml2Subject> GenerateNameId(string subjectId, IList<Claim> userClaims, string defaultFormat, string requestedFormat = null)
+        public override async Task<Saml2Subject> GenerateNameId(string subjectId, IList<Claim> userClaims, string defaultFormat, string requestedFormat )
         {
             const string customFormat = SamlConstants.NameIdentifierFormats.Transient;
 

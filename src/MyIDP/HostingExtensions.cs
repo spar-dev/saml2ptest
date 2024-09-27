@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Rsk.Saml.Configuration;
 using Serilog;
 using Duende.IdentityServer.Configuration;
+using Rsk.Saml.Generators;
 namespace IdentityServer;
 
 internal static class HostingExtensions
@@ -34,7 +35,7 @@ internal static class HostingExtensions
             .AddSamlPlugin(options =>
             {
                 options.Licensee = "Demo";
-                options.LicenseKey = "eyJhdXRoIjoiREVNTyIsImV4cCI6IjIwMjQtMDktMjdUMDE6MDA6MDAuNDcyNTE4NyswMDowMCIsImlhdCI6IjIwMjQtMDgtMjhUMDE6MDA6MDAiLCJvcmciOiJERU1PIiwiYXVkIjoyfQ==.WT/bY3Jxc4T6OXnjGWNhhgWJiuGY+yVCEHi9hIwK4TZ42YN0Okg1S6/ChYlLXSAM4RWVUndVIHJwJao8vTfGAAMKDNV5rKyhL5MmAjGPrlohJ8f+i9PG+6sBMlZ0BCsQsjr/kbbkqOEOjZwvJqE0vjJxsC+qAjKneKzkoAcdycPJpgV/Q/2VxFbj/4tu73lOwFK0im3Q4pmCyqCundgYGFZMbLbydm3ywwtD49ePR9u6zhw82eW7iZmqLIX7PjZX+AWKdxTnWXymgXDIJ1wpnW6RDLRAXulI2ZEWcK/KdM7t8vcwq8AbIXXxC8bimGv+KIokZ/S5mKPCCM3R8/UF5hLBs2QubATVJaD0AXB4P/u+mDBpaYjXzukwufOm0xEP9GBfTyNdwagjYyY2quTXUuYjJNrO8rOtAK3C4hVv3RM43rnf24lldlo7c/uo5h5opmGdcN1D6STcxf1vtzkNNCnjmPejIYzLq02R0K+6AgmnT71rWzhFFo6OUz2Z3Qi6gk82pwB2ppWtvc/WrBDb+nJ1NK+j9OkWYj5Zg/A9CdfCh7hxrnOzxXoKixVWnNsGN9Yz4QbZz+SRtDWW0CbdCT0kvGne9NGrlv6Uhn6f9XF6JF73etK/MUWYdmo10eKHWch/39aih/qqttwDPQtAKizGsG7ReEoL7ZSSUZgqsDA=";
+                options.LicenseKey = "eyJhdXRoIjoiREVNTyIsImV4cCI6IjIwMjQtMTAtMTlUMDA6MDA6MDAiLCJpYXQiOiIyMDI0LTA5LTE5VDA5OjE2OjA3Iiwib3JnIjoiREVNTyIsImF1ZCI6Mn0=.Px+W0ZpuAVL+jeIdppLYDcP6jrhBD7Llkv/56MMIcZ9D/VPZqZhhQx/wqvCfuGxI8QMg5/z0SXIn1IWPKeFcWdBYVyoixwzWbsi8or9g60rcePyyCn7ucPtu90A5mPs/mf6mQIc7qasFiL1RC7Dx0r153s3Im5WTOqr7O8gK45bNOqEninJ89pDxyX7p7I6a4BuSRxqDJYes9iP1NpL20YZbSrABW4cegAl7MsZmLc1zaEwYhN4+a3Yhap9JwKTUI3twQcOmKmPf1E7xeS5QunxIA4AvvicXuRjGMHnaUfzynEeTv9guiVh42bbbTxSLpVle7b6SeDcUrOBLAHzJHctLrio3zWYKdilnnmtDKlr8BMpmk9mH6pXsyC7fbG4wS0BbiAAday+PYjV/jOxdn8IK3xTrecp1+2w0D0obTLBTuVi1bWI5jeyHXXj9nBTAHnV01t9/X3jUSBDNHuRAltgBiAwuetRoRwXM4xSIdQS8UoXnFwoLNtgx5lUAaNdaNmnrDsA9jszZjDXgTZT4noQilbcC5wf+IhdgGyXMVSsOvhlS74Kcm1XBFhIzptQuF4QW+fy+qGLMZNr+1qUcJ/uTY2CRYMjcH2sHN9AJDWg89+UDTpm/Y+WhFAPsomYTXnpTjzDVzV1QULXDcL2lDQXfYsqytCrtvK+W5WikUMk=";
                 //options.DefaultClaimMapping.Add("name", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
                 options.DefaultClaimMapping.Add("SURID", "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/SURID");
                  
@@ -76,6 +77,7 @@ internal static class HostingExtensions
                 };
             });
 
+builder.Services.AddTransient<ISamlNameIdGenerator, CustomNameIdGenerator>();
         return builder.Build();
     }
     

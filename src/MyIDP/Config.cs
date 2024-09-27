@@ -110,7 +110,7 @@ public static class Config
         new ServiceProvider()
         {
           EntityId = "https://localhost:5003",
-           NameIdentifierFormat = SamlConstants.NameIdentifierFormats.Transient,
+            NameIdentifierFormat = SamlConstants.NameIdentifierFormats.Transient,
            
           AssertionConsumerServices = new List<Service>()
           {
