@@ -1,0 +1,28 @@
+### Auth Service
+# @name authHub
+
+@authhub_HostAddress = https://localhost:5001
+
+POST {{authhub_HostAddress}}/connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=testclient
+&client_secret=secret
+&grant_type=password
+&username=95057
+&password=Password123$
+&scope=openid profile appctr.manage
+
+#### Variable Response
+@accessToken = {{authHub.response.body.$.access_token}}
+
+### target api
+@FDMVRPTAPI_HostAddress = https://localhost:5002
+
+GET {{FDMVRPTAPI_HostAddress}}/
+Accept: application/json
+Authorization: Bearer {{accessToken}}
+
+###
+
+

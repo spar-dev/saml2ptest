@@ -39,7 +39,8 @@ public static class TestUsers
                         new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                         new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
                         new Claim(JwtClaimTypes.Address, JsonSerializer.Serialize(address), IdentityServerConstants.ClaimValueTypes.Json),
-                        new Claim("SURID","idforalice")                        
+                        new Claim("SURID","idforalice"),
+                        new Claim("UTYPE","S")                       
                     }
                 },
                 new TestUser
@@ -56,7 +57,36 @@ public static class TestUsers
                         new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                         new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
                         new Claim(JwtClaimTypes.Address, JsonSerializer.Serialize(address), IdentityServerConstants.ClaimValueTypes.Json),
-                         new Claim("SURID","idforbob")
+                         new Claim("SURID","idforbob"),
+                         new Claim("UTYPE","S") 
+                    }
+                },
+                new TestUser
+                {
+                    SubjectId = "3",
+                    Username = "95057",
+                    Password = "Password123$",
+                    Claims =
+                    {
+                        new Claim(JwtClaimTypes.Name, "Bob Smith"),                       
+                        new Claim(JwtClaimTypes.Email, "BobSmith@email.com"),                       
+                        new Claim("SURID","95057"),
+                        new Claim("UTYPE","M"), 
+                        new Claim("ULEVE","user") 
+                    }
+                },
+                new TestUser
+                {
+                    SubjectId = "4",
+                    Username = "95504",
+                    Password = "Password123$",
+                    Claims =
+                    {
+                        new Claim(JwtClaimTypes.Name, "Arun David"),                       
+                        new Claim(JwtClaimTypes.Email, "arundavid@email.com"),                       
+                        new Claim("SURID","95504"),
+                        new Claim("UTYPE","M"), 
+                        new Claim("ULEVE","admin") 
                     }
                 }
             };

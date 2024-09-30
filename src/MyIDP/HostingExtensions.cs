@@ -18,6 +18,7 @@ internal static class HostingExtensions
         builder.Services.AddIdentityServer(options =>
             {
                 options.KeyManagement.Enabled = true;
+                options.EmitStaticAudienceClaim=true;
 
                 //Required to use the SAML plugin with Key Management
                 options.KeyManagement.SigningAlgorithms = new[]
@@ -30,6 +31,7 @@ internal static class HostingExtensions
             })
             .AddInMemoryIdentityResources(Config.IdentityResources)
             .AddInMemoryApiScopes(Config.ApiScopes)
+            .AddInMemoryApiResources(Config.ApiResources)
             .AddInMemoryClients(Config.Clients)
             .AddTestUsers(TestUsers.Users)
             .AddSamlPlugin(options =>
@@ -77,7 +79,7 @@ internal static class HostingExtensions
                 };
             });
 
-builder.Services.AddTransient<ISamlNameIdGenerator, CustomNameIdGenerator>();
+//builder.Services.AddTransient<ISamlNameIdGenerator, CustomNameIdGenerator>();
         return builder.Build();
     }
     

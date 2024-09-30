@@ -35,7 +35,7 @@ public static class Config
                 Name="user_info",
                 DisplayName = "User Information",
                 UserClaims= new List<string>{
-                    "SURID"                 
+                    "SURID", "UTYPE", "PID", "ULEVE"                 
                 }
             },
         };
@@ -43,8 +43,48 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         { 
-            new ApiScope(name: "api1", displayName: "My API"),
-            new ApiScope(name: "identity", displayName: "user identity", new [] {  "SURID"}),
+           new ApiScope(name: "appctr.readwrite",   displayName: "ReadWrite redirect info.")
+           {
+             UserClaims ={"SURID","UTYPE"}
+           },
+           new ApiScope(name: "appctr.manage",   displayName: "ReadWrite redirect info.")
+           {
+             UserClaims ={"SURID","UTYPE","name", "email"}
+           },
+           
+           new ApiScope(name: "svapp.manage",    displayName: "Manages sv app")
+            {
+             UserClaims ={"SURID","UTYPE","ULEVE"}
+           }, 
+           new ApiScope(name: "svapp.readwrite",    displayName: "ReadWrite sv app")
+            {
+             UserClaims ={"SURID","UTYPE"}
+           }, 
+           new ApiScope(name: "svcommapp.manage",    displayName: "Manages sv comm app")
+            {
+             UserClaims ={"SURID","UTYPE","ULEVE"}
+           }, 
+           new ApiScope(name: "svcommapp.readwrite",    displayName: "ReadWrite sv comm app")
+            {
+             UserClaims ={"SURID","UTYPE"}
+           },         
+        };
+
+    public static IEnumerable<ApiResource> ApiResources =>
+        new ApiResource[]
+        {
+            new ApiResource("appctr", "API for Webapp redirection")
+            {
+                Scopes = { "appctr.readwrite","appctr.manage"}
+            },
+             new ApiResource("svappapi", "SV App Api")
+            {
+                Scopes = { "svapp.manage","svapp.readwrite" }
+            },
+            new ApiResource("svcommapi", "SV App Api")
+            {
+                Scopes = { "svcommapp.manage","svcommapp.readwrite" }
+            },
         };
 
     public static IEnumerable<Client> Clients =>
@@ -64,7 +104,28 @@ public static class Config
                 },
 
                 // scopes that client has access to
-                AllowedScopes = { "api1" }
+                AllowedScopes = { "api1", "appctr" }
+            },
+            new Client
+            {
+                ClientId = "testclient",
+
+                // no interactive user, use the clientid/secret for authentication
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+
+                // secret for authentication
+                ClientSecrets =
+                {
+                    new Secret("secret".Sha256())
+                },
+                 
+                    AlwaysSendClientClaims = true,
+                    AllowOfflineAccess = true,
+                // scopes that client has access to
+                AllowedScopes = { 
+                    IdentityServerConstants.StandardScopes.OpenId, 
+                     IdentityServerConstants.StandardScopes.Profile,                      
+                       "appctr.readwrite","appctr.manage","svapp.manage","svapp.readwrite","svcommapp.manage","svcommapp.readwrite" }
             },
             // interactive ASP.NET Core Web App
             new Client
